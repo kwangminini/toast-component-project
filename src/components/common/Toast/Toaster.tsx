@@ -45,14 +45,14 @@ export function Toaster({
     duration = 3000,
     render,
   }: IToastParams) => {
-    const newToast = {
+    const newToastItem = {
       id: getRandomId(),
       variant,
       message,
       duration,
       render,
     };
-    setToastList((prevToastList) => [newToast, ...prevToastList]);
+    setToastList((prevToastList) => [newToastItem, ...prevToastList]);
   };
 
   //toast 삭제 함수
