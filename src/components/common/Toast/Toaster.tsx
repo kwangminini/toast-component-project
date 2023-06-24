@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import { ToastContainer, Toast, ToastContext } from "~/components/common/Toast";
-
+import { ToastContainer, ToastContext } from "~/components/common/Toast";
+import { ToastController } from "~/components/common/Toast/ToastController";
 import {
   IToastItem,
   IToastParams,
   ToastPosition,
 } from "~/components/common/Toast/types";
-import { createRandomId } from "~/utils/createRandomId";
+import { getRandomId } from "~/utils/getRandomId";
 
 interface IToasterProps {
   position?: ToastPosition;
@@ -46,7 +46,7 @@ export function Toaster({
     render,
   }: IToastParams) => {
     const newToast = {
-      id: createRandomId(),
+      id: getRandomId(),
       variant,
       message,
       duration,
@@ -58,7 +58,7 @@ export function Toaster({
   //toast 삭제 함수
   const removeToast = useCallback((id: string) => {
     setToastList((prevToastList) =>
-      prevToastList.filter((toast) => toast.id !== id)
+      prevToastList.filter((toastItem) => toastItem.id !== id)
     );
   }, []);
 
@@ -71,7 +71,7 @@ export function Toaster({
         createPortal(
           <ToastContainer style={TOAST_CONTAINER_POSITION[position]}>
             {toastList.map((toastItem: IToastItem) => (
-              <Toast
+              <ToastController
                 {...toastItem}
                 key={toastItem.id}
                 removeToast={removeToast}
