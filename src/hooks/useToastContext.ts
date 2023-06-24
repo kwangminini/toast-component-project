@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { IToastContext, ToastContext } from "~/components/common/Toast";
+import { IToastContext, ToastContext } from "~/context/ToastContext";
 
 /**
  * toast context 에러처리 포함한 커스텀 훅

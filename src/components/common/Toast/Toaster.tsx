@@ -1,15 +1,12 @@
 import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import {
-  ToastContainer,
-  ToastContext,
-  ToastController,
-} from "~/components/common/Toast";
+import { ToastContainer, ToastController } from "~/components/common/Toast";
 import {
   IToastItem,
   IToastParams,
   ToastPosition,
 } from "~/components/common/Toast/types";
+import { ToastContext } from "~/context/ToastContext";
 import { getRandomId } from "~/utils/getRandomId";
 
 interface IToasterProps {
