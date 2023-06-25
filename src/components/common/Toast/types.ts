@@ -18,7 +18,3 @@ export interface IToastParams {
 export interface IToastItem extends IToastParams {
   id: string;
 }
-
-export interface IToastProps extends IToastItem {
-  removeToast: (id: string) => void;
-}

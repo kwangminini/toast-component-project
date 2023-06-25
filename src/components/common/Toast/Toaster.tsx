@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ToastContainer, ToastController } from "~/components/common/Toast";
 import {
@@ -13,24 +13,6 @@ interface IToasterProps {
   position?: ToastPosition;
   children: React.ReactNode;
 }
-const TOAST_CONTAINER_POSITION = {
-  "top-left": { top: 10, left: 10, alignItems: "flex-start" },
-  "top-center": {
-    top: 10,
-    left: "50%",
-    transform: "translateX(-50%)",
-    alignItems: "center",
-  },
-  "top-right": { top: 10, right: 10, alignItems: "flex-end" },
-  "bottom-left": { bottom: 10, left: 10, alignItems: "flex-start" },
-  "bottom-center": {
-    bottom: 10,
-    left: "50%",
-    transform: "translateX(-50%)",
-    alignItems: "center",
-  },
-  "bottom-right": { bottom: 10, right: 10, alignItems: "flex-end" },
-};
 
 export function Toaster({
   position = "bottom-right",
@@ -64,21 +46,20 @@ export function Toaster({
       prevToastList.filter((toastItem) => toastItem.id !== id)
     );
   }, []);
+  //context provider value
+  const toastContextValue = useMemo(
+    () => ({ position, addToast, removeToast }),
+    [position, addToast, removeToast]
+  );
 
   return (
-    <ToastContext.Provider
-      value={{ position, toastList, addToast, removeToast }}
-    >
+    <ToastContext.Provider value={toastContextValue}>
       {children}
       {toastList.length > 0 &&
         createPortal(
-          <ToastContainer style={TOAST_CONTAINER_POSITION[position]}>
+          <ToastContainer>
             {toastList.map((toastItem: IToastItem) => (
-              <ToastController
-                {...toastItem}
-                key={toastItem.id}
-                removeToast={removeToast}
-              />
+              <ToastController {...toastItem} key={toastItem.id} />
             ))}
           </ToastContainer>,
           document.body

@@ -1,10 +1,14 @@
 import { memo, useEffect } from "react";
 import { Toast } from "~/components/common/Toast";
-import { IToastProps } from "~/components/common/Toast/types";
+import { IToastItem } from "~/components/common/Toast/types";
+import { useToastContext } from "~/hooks/useToastContext";
+
+const DEFAUT_DURATION = 3000;
 
 export const ToastController = memo(
-  ({ duration, ...toastItem }: IToastProps) => {
-    const { id, removeToast, render } = toastItem;
+  ({ duration, ...toastItem }: IToastItem) => {
+    const { id, render } = toastItem;
+    const { removeToast } = useToastContext();
     //toast auto remove 타이머 설정
     useEffect(() => {
       const timer = removeToastTimer();
@@ -16,7 +20,7 @@ export const ToastController = memo(
     const removeToastTimer = () => {
       return setTimeout(() => {
         removeToast(id);
-      }, duration || 3000);
+      }, duration || DEFAUT_DURATION);
     };
     //render props가 있을 시 render component 렌더링
     if (render) {

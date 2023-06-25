@@ -1,7 +1,9 @@
 import { CloseButton } from "~/components/common/Button";
-import { IToastProps } from "~/components/common/Toast/types";
+import { IToastItem } from "~/components/common/Toast/types";
+import { useToastContext } from "~/hooks/useToastContext";
 
-export function Toast({ id, variant, message, removeToast }: IToastProps) {
+export function Toast({ id, variant, message }: IToastItem) {
+  const { removeToast } = useToastContext();
   const bgColor = variant === "success" ? "bg-toast-success-bg" : "bg-toast-bg";
 
   return (
