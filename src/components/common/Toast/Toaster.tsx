@@ -39,21 +39,24 @@ export function Toaster({
   const [toastList, setToastList] = useState<IToastItem[]>([]);
 
   //toast 추가 함수
-  const addToast = ({
-    variant = "default",
-    message,
-    duration = 3000,
-    render,
-  }: IToastParams) => {
-    const newToastItem = {
-      id: getRandomId(),
-      variant,
+  const addToast = useCallback(
+    ({
+      variant = "default",
       message,
-      duration,
+      duration = 3000,
       render,
-    };
-    setToastList((prevToastList) => [newToastItem, ...prevToastList]);
-  };
+    }: IToastParams) => {
+      const newToastItem = {
+        id: getRandomId(),
+        variant,
+        message,
+        duration,
+        render,
+      };
+      setToastList((prevToastList) => [newToastItem, ...prevToastList]);
+    },
+    []
+  );
 
   //toast 삭제 함수
   const removeToast = useCallback((id: string) => {
